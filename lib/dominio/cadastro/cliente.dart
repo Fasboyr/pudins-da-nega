@@ -1,10 +1,10 @@
-import 'package:pudins_da_nega/dominio/cpf.dart';
+import 'package:pudins_da_nega/dominio/cadastro/cpf.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_cliente.dart';
-import 'package:pudins_da_nega/dominio/endereco.dart';
+import 'package:pudins_da_nega/dominio/cadastro/endereco.dart';
 import 'package:pudins_da_nega/dominio/interface/dao_cliente.dart';
 
 class Cliente {
-  late dynamic? id;
+  late dynamic id;
   late String nome;
   late String cpf;
   late String cep;
@@ -19,7 +19,10 @@ class Cliente {
     cpf = dto.cpf;
     endereco = dto.endereco;
     telefone = dto.telefone;
+    ehNomeValido();
     CPF(cpf);
+    ehCEPValido();
+    ehTelefoneValido();
   }
 
   ehNomeValido() {

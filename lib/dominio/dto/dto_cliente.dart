@@ -1,7 +1,7 @@
-import 'package:pudins_da_nega/dominio/endereco.dart';
+import 'package:pudins_da_nega/dominio/cadastro/endereco.dart';
 
 class DTOCliente {
-  late dynamic? id;
+  late dynamic id;
   late String nome;
   late String cpf;
   late String cep;
