@@ -10,7 +10,6 @@ class Catalogo{
   late String urlAvatar;
   late String descricao;
   late List<Tamanho> tamanhos;
-  late double preco;
   late List<Ingrediente> ingredientes;
   late IDAOCatalogo dao;
   late DTOCatalogo dto;
@@ -20,29 +19,28 @@ class Catalogo{
     urlAvatar = dto.urlAvatar;
     descricao = dto.descricao;
     tamanhos = dto.tamanho;
-    preco = dto.preco;
     ingredientes = dto.ingredientes;
     verificarTamanho(tamanhos);
+    verificarIngrediente(ingredientes);
     ehNomeValido();
     ehDescricaoValido();
   }
 
   verificarTamanho(List<Tamanho> tamanhos) {
     for(var i = 0; i < tamanhos.length; i++){
-         ehTamanhoValido(tamanhos[i].tamanho);
+         tamanhos[i].tamanho = ehTamanhoValido(tamanhos[i].tamanho);
+         ehPrecoValido(tamanhos[i].preco);
     }
   }
-  ehTamanhoValido(String tamanho) {
-    if (tamanho != 'Pequeno' || tamanho != 'Médio' || tamanho != 'Grande'){
-      throw Exception('Tamanho não pode ser diferente de Pequeno, Médio e Grande.');
-    } else if( tamanho == 'Pequeno'){
-      tamanho = 'Pequeno - 120 gm';
-    } else if( tamanho == 'Médio'){
-      tamanho = 'Médio - 500 gm';
-    } else if( tamanho == 'Grande'){
-      tamanho = 'Grande - 1kg e 100 gm';
+  
+  verificarIngrediente(List<Ingrediente> ingredientes){
+    for(var i = 0; i < ingredientes.length; i++){
+         ehIngredienteValido(ingredientes[i].ingrediente);
+         ehAlergiaValido(ingredientes[i].causaAlergia);
     }
+
   }
+
 
   ehNomeValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
@@ -61,9 +59,6 @@ class Catalogo{
     }
   }
 
-
-
-
   ehDescricaoValido() {
     var min = 20;
     var max = 150;
@@ -74,6 +69,42 @@ class Catalogo{
       throw Exception('O nome deve possuir pelo menos $min caracteres');
     } else if (descricao.length > max) {
       throw Exception('O nome deve possuir no maximo $max caracteres');
+    }
+  }
+
+
+  ehTamanhoValido(String tamanho) {
+    if (tamanho != 'Pequeno' || tamanho != 'Médio' || tamanho != 'Grande'){
+      throw Exception('Tamanho não pode ser diferente de Pequeno, Médio e Grande.');
+    } else if( tamanho == 'Pequeno'){
+      return 'Pequeno - 120 gm';
+    } else if( tamanho == 'Médio'){
+      return 'Médio - 500 gm';
+    } else if( tamanho == 'Grande'){
+      return'Grande - 1kg e 100 gm';
+    }
+  }
+
+  ehPrecoValido(double preco){
+    if(preco <=0){
+      throw Exception('O preço do produto deve ser maior que 0');
+    }
+  }
+
+  ehAlergiaValido(String alergia){
+    if(alergia != 'S' || alergia != 'N'){
+      throw Exception('Alergia deve ser preenchido apenas com S ou com N ');
+    }
+  }
+
+  ehIngredienteValido(String ingrediente) {
+    var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
+
+    if (ingrediente.isEmpty) {
+      throw Exception('O Ingrediente é obrigatório');
+    } else if (!formato.hasMatch(ingrediente)) {
+      throw Exception(
+          'O Ingrediente deve ter apenas caracteres alfabéticos, acentuações e espaços');
     }
   }
 }

@@ -7,9 +7,8 @@ class DTOCatalogo{
   late String urlAvatar;
   late String descricao;
   late List<Tamanho> tamanho;
-  late double preco;
-  late List<Ingrediente> ingredientes; 
+  late double preco;  late List<Ingrediente> ingredientes; 
 
-  DTOCatalogo({this.id, required this.urlAvatar, required this.descricao, required this.tamanho, required this.preco, required this.ingredientes});
+  DTOCatalogo({this.id, required this.urlAvatar, required this.descricao, required this.tamanho, required this.ingredientes});
 
 }
