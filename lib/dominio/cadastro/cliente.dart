@@ -20,6 +20,8 @@ class Cliente {
     endereco = dto.endereco;
     telefone = dto.telefone;
     ehNomeValido();
+    Endereco( rua: endereco.rua, numero: endereco.numero, complemento: endereco.complemento,
+       bairro: endereco.bairro, cidade: endereco.cidade, estado: endereco.estado);
     CPF(cpf);
     ehCEPValido();
     ehTelefoneValido();
@@ -53,7 +55,6 @@ class Cliente {
     }
   }
 
-
   ehTelefoneValido() {
     var format = RegExp(r'^\([1-9]{2}\) [9] [6-9]{1}[0-9]{3}\-[0-9]{4}$');
     if (telefone.isEmpty) {
@@ -64,10 +65,7 @@ class Cliente {
     }
   }
 
-  
   DTOCliente salvar(DTOCliente dto) {
-    ehNomeValido();
     return dao.salvar(dto);
   }
-
 }

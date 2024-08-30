@@ -1,14 +1,16 @@
+import 'dart:ffi';
+
 import 'package:pudins_da_nega/dominio/catalogo/ingrediente.dart';
 import 'package:pudins_da_nega/dominio/catalogo/tamanho.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_catalogo.dart';
 import 'package:pudins_da_nega/dominio/interface/dao_catalogo.dart';
 
-class Catalogo{
-
+class Catalogo {
   late dynamic id;
   late String nome;
   late String urlAvatar;
   late String descricao;
+  late int quantidade;
   late List<Tamanho> tamanhos;
   late List<Ingrediente> ingredientes;
   late IDAOCatalogo dao;
@@ -16,6 +18,7 @@ class Catalogo{
 
   Catalogo({required this.dao, required this.dto}) {
     id = dto.id;
+    nome = dto.nome;
     urlAvatar = dto.urlAvatar;
     descricao = dto.descricao;
     tamanhos = dto.tamanho;
@@ -24,23 +27,20 @@ class Catalogo{
     verificarIngrediente(ingredientes);
     ehNomeValido();
     ehDescricaoValido();
+    ehQuantidadeValido();
   }
 
   verificarTamanho(List<Tamanho> tamanhos) {
-    for(var i = 0; i < tamanhos.length; i++){
-         tamanhos[i].tamanho = ehTamanhoValido(tamanhos[i].tamanho);
-         ehPrecoValido(tamanhos[i].preco);
+    for (var i = 0; i < tamanhos.length; i++) {
+      Tamanho(tamanho: tamanhos[i].tamanho, preco: tamanhos[i].preco);
     }
   }
-  
-  verificarIngrediente(List<Ingrediente> ingredientes){
-    for(var i = 0; i < ingredientes.length; i++){
-         ehIngredienteValido(ingredientes[i].ingrediente);
-         ehAlergiaValido(ingredientes[i].causaAlergia);
+
+  verificarIngrediente(List<Ingrediente> ingredientes) {
+    for (var i = 0; i < ingredientes.length; i++) {
+      Ingrediente(ingrediente: ingredientes[i].ingrediente, causaAlergia: ingredientes[i].causaAlergia);
     }
-
   }
-
 
   ehNomeValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
@@ -72,39 +72,13 @@ class Catalogo{
     }
   }
 
-
-  ehTamanhoValido(String tamanho) {
-    if (tamanho != 'Pequeno' || tamanho != 'Médio' || tamanho != 'Grande'){
-      throw Exception('Tamanho não pode ser diferente de Pequeno, Médio e Grande.');
-    } else if( tamanho == 'Pequeno'){
-      return 'Pequeno - 120 gm';
-    } else if( tamanho == 'Médio'){
-      return 'Médio - 500 gm';
-    } else if( tamanho == 'Grande'){
-      return'Grande - 1kg e 100 gm';
+  ehQuantidadeValido() {
+    if (quantidade < 0) {
+      throw Exception('A quantidade do produto não pode ser negativa');
     }
   }
 
-  ehPrecoValido(double preco){
-    if(preco <=0){
-      throw Exception('O preço do produto deve ser maior que 0');
-    }
-  }
-
-  ehAlergiaValido(String alergia){
-    if(alergia != 'S' || alergia != 'N'){
-      throw Exception('Alergia deve ser preenchido apenas com S ou com N ');
-    }
-  }
-
-  ehIngredienteValido(String ingrediente) {
-    var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
-
-    if (ingrediente.isEmpty) {
-      throw Exception('O Ingrediente é obrigatório');
-    } else if (!formato.hasMatch(ingrediente)) {
-      throw Exception(
-          'O Ingrediente deve ter apenas caracteres alfabéticos, acentuações e espaços');
-    }
+  DTOCatalogo salvar(DTOCatalogo dto) {
+    return dao.salvar(dto);
   }
 }
