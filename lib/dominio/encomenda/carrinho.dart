@@ -29,6 +29,7 @@ class Carrinho {
 
     verificarEncomenda();
     ehEntregaValida();
+    ehPagamentoValido();
   }
 
   verificarEncomenda() {
