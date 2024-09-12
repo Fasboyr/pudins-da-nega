@@ -5,22 +5,22 @@ class CPF {
     eVazio(cpf);
     cpf = cpf.replaceAll(RegExp(r'\D'), '');
     numerosCPF = cpf.split('').map(int.parse).toList();
-    eOnzeNumeros();
-    eNumeroDiferente();
-    eDigitoCorreto();
+    ehOnzeNumeros();
+    ehNumeroDiferente();
+    ehDigitoCorreto();
   }
 
   eVazio(String cpf) {
     if (cpf.isEmpty) throw Exception('CPF não pode ser vazio!');
   }
 
-  bool eOnzeNumeros() {
+  bool ehOnzeNumeros() {
     numerosCPF.forEach(print);
     if (numerosCPF.length != 11) throw Exception('CPF precisa ter 11 números');
     return true;
   }
 
-  bool eNumeroDiferente() {
+  bool ehNumeroDiferente() {
     var diferente = false;
     for (int i = 0; i < 9; i++) {
       if (numerosCPF[i] != numerosCPF[i + 1]) {
@@ -28,11 +28,13 @@ class CPF {
         break;
       }
     }
-    if (!diferente) throw Exception('CPF não pode ter números iguais');
+    if (diferente == false){
+       throw Exception('CPF não pode ter números iguais');
+    }
     return diferente;
   }
 
-  bool eDigitoCorreto() {
+  bool ehDigitoCorreto() {
     verificarPrimeiroDigito();
     verificarSegundoDigito();
     return true;

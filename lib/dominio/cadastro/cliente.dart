@@ -1,7 +1,7 @@
 import 'package:pudins_da_nega/dominio/cadastro/cpf.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_cliente.dart';
 import 'package:pudins_da_nega/dominio/cadastro/endereco.dart';
-import 'package:pudins_da_nega/dominio/interface/dao_cliente.dart';
+import 'package:pudins_da_nega/dominio/interface/i_dao_cliente.dart';
 
 class Cliente {
   late dynamic id;
@@ -17,6 +17,7 @@ class Cliente {
     id = dto.id;
     nome = dto.nome;
     cpf = dto.cpf;
+    cep = dto.cep;
     endereco = dto.endereco;
     telefone = dto.telefone;
     ehNomeValido();
@@ -45,7 +46,8 @@ class Cliente {
   }
 
   ehCEPValido() {
-    var formato = RegExp(r'^\ [0-9]{4}\-[0-9]{3}$');
+    var formato = RegExp(r'^[0-9]{5}\-[0-9]{3}$');
+
 
     if (cep.isEmpty) {
       throw Exception('CEP não pode ser vazio');
@@ -65,7 +67,12 @@ class Cliente {
     }
   }
 
-  DTOCliente salvar(DTOCliente dto) {
-    return dao.salvar(dto);
+  Future<DTOCliente> incluir() async {
+    return await dao.salvar(dto);
+  }
+
+  bool excluir(DTOCliente dto){
+    dao.alterarStatus(dto);
+    return true;
   }
 }
