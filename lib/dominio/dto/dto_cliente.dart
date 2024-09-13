@@ -7,6 +7,7 @@ class DTOCliente {
   late String cep;
   late Endereco endereco;
   late String telefone;
+   final String status;
 
-  DTOCliente({this.id, required this.nome, required this.cpf, required this.cep, required this.endereco, required this.telefone});
+  DTOCliente({this.id, required this.nome, required this.cpf, required this.cep, required this.endereco, required this.telefone, required this.status});
 }

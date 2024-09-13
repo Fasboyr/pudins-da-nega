@@ -1,16 +1,14 @@
 class CPF {
   late List<int> numerosCPF;
 
-  CPF(String cpf) {
+  CPF(String? cpf) {
     eVazio(cpf);
-    cpf = cpf.replaceAll(RegExp(r'\D'), '');
+    cpf = cpf!.replaceAll(RegExp(r'\D'), '');
     numerosCPF = cpf.split('').map(int.parse).toList();
-    ehOnzeNumeros();
-    ehNumeroDiferente();
-    ehDigitoCorreto();
   }
 
-  eVazio(String cpf) {
+  eVazio(String? cpf) {
+     if (cpf == null) throw Exception('CPF não pode ser nulo!');
     if (cpf.isEmpty) throw Exception('CPF não pode ser vazio!');
   }
 
@@ -28,8 +26,8 @@ class CPF {
         break;
       }
     }
-    if (diferente == false){
-       throw Exception('CPF não pode ter números iguais');
+    if (diferente == false) {
+      throw Exception('CPF não pode ter números iguais');
     }
     return diferente;
   }
@@ -60,5 +58,11 @@ class CPF {
     if (calcularDigito(9) != numerosCPF[10])
       throw Exception('Segundo digito incorreto');
     return true;
+  }
+
+  validacao() {
+    ehOnzeNumeros();
+    ehNumeroDiferente();
+    ehDigitoCorreto();
   }
 }

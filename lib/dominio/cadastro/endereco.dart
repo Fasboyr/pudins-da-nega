@@ -1,12 +1,16 @@
 class Endereco {
-  late String rua;
-  late int numero;
-  late String complemento;
-  late String bairro;
-  late String cidade;
-  late String estado;
+  late dynamic id;
+  late String? rua;
+  late int? numero;
+  late String? complemento;
+  late String? bairro;
+  late String? cidade;
+  late String? estado;
 
-  Endereco({required this.rua, required this.numero, required this.complemento, required this.bairro, required this.cidade, required this.estado}) {
+  Endereco(dynamic? String? rua, int? numero, String? complemento, String? bairrom,
+      String? cidade, String? estado) {}
+
+  enderecoValidacao() {
     ehRuaValido();
     ehNumeroValido();
     ehBairroValido();
@@ -14,6 +18,7 @@ class Endereco {
     ehCidadeValido();
     ehEstadoValido();
   }
+
   ehRuaValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
