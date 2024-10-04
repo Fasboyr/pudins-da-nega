@@ -5,9 +5,19 @@ class DTOCliente {
   late String nome;
   late String cpf;
   late String cep;
+   final String status;
+  final String? urlAvatar;
   late Endereco endereco;
   late String telefone;
-   final String status;
 
-  DTOCliente({this.id, required this.nome, required this.cpf, required this.cep, required this.endereco, required this.telefone, required this.status});
+  DTOCliente(
+      {this.id,
+      required this.nome,
+      required this.cpf,
+      required this.cep,
+      this.status = 'A',
+      this.urlAvatar,
+      required this.endereco,
+      required this.telefone,
+      });
 }

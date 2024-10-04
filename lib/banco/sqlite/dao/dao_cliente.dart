@@ -11,7 +11,7 @@ class DAOCliente implements IDAOCliente {
   ''';
 
   final sqlInserirCliente = '''
-    'INSERT INTO cliente (nome, cpf, cep, telefone, endereco_id) VALUES (?,?,?,?,?)'
+    'INSERT INTO cliente (nome, cpf, cep, status,url_avatar, telefone, , endereco_id) VALUES (?,?,?,?,?,?)'
   ''';
 
   final sqlAlterarEndereco = '''
@@ -20,7 +20,7 @@ class DAOCliente implements IDAOCliente {
   ''';
 
   final sqlAlterarCliente = '''
-    UPDATE cliente SET nome=?, cpf=?, cep=?, telefone=?, endereco_id=?
+    UPDATE cliente SET nome=?, cpf=?, cep=?, status =?, url_avatar=?, telefone=?, endereco_id=?
     WHERE id = ?
   ''';
 
@@ -48,6 +48,8 @@ class DAOCliente implements IDAOCliente {
           nome: linha['nome'].toString(),
           cpf: linha['CPF'].toString(),
           cep: linha['cep'].toString(),
+          status: linha['status'].toString(),
+          urlAvatar: linha['url_avatar'].toString(),
           telefone: linha['telefone'].toString(),
           endereco: Endereco(
             rua: linha['rua'].toString(),
@@ -70,6 +72,8 @@ class DAOCliente implements IDAOCliente {
         nome: resultado['nome'].toString(),
         cpf: resultado['CPF'].toString(),
         cep: resultado['cep'].toString(),
+        status: resultado['status'].toString(),
+        urlAvatar: resultado['url_avatar'].toString(),
         telefone: resultado['telefone'].toString(),
         endereco: Endereco(
           rua: resultado['rua'].toString(),
@@ -113,14 +117,13 @@ class DAOCliente implements IDAOCliente {
       dto.endereco.bairro,
       dto.endereco.cidade,
       dto.endereco
-          .estado, // Certifique-se de que o ID do endereço está presente no DTOCliente
+          .estado, 
     ]);
 
     await _db.rawUpdate(
         sqlAlterarCliente, [dto.nome, dto.cep, dto.cpf, dto.telefone, dto.id]);
     return dto;
   }
-
 
   @override
   Future<bool> alterarStatus(int id) async {

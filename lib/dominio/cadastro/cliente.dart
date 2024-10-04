@@ -11,9 +11,10 @@ class Cliente {
   Endereco? _endereco;
   String? _telefone;
   String _status = 'A';
+  String? _urlAvatar;
   late IDAOCliente dao;
 
-  Cliente({required this.dao}) {}
+  Cliente({required this.dao});
 
   validar({required DTOCliente dto}) {
     id = dto.id;
@@ -23,13 +24,14 @@ class Cliente {
     endereco = dto.endereco;
     telefone = dto.telefone;
     status = dto.status;
+    urlAvatar = dto.urlAvatar;
     endereco = Endereco(
-            rua: endereco.rua,
-            numero: endereco.numero,
-            complemento: endereco.complemento,
-            bairro: endereco.bairro,
-            cidade: endereco.cidade,
-            estado: endereco.estado)
+            rua: dto.endereco.rua,
+            numero: dto.endereco.numero,
+            complemento: dto.endereco.complemento,
+            bairro: dto.endereco.bairro,
+            cidade: dto.endereco.cidade,
+            estado: dto.endereco.estado)
         .enderecoValidacao();
     cpfValidador.CPF(cpf).validacao();
   }
@@ -75,7 +77,7 @@ class Cliente {
 
   set status(String? status) {
     if (status == null) throw Exception('Status não pode ser nulo.');
-    if (status != 'A' || status != 'I')
+    if (status != 'A' && status != 'I') // Corrigido para usar '&&'
       throw Exception('Status deve ser "A" ou "I".');
     _status = status;
   }
@@ -109,10 +111,19 @@ class Cliente {
   }
 
   set endereco(Endereco? endereco) {
-    if (endereco == null) throw Exception('Endereco não pode ser nulo!');
-    if (endereco.rua == null) throw Expando();
+    try {
+      if (endereco != null) {
+        endereco.enderecoValidacao(); // Verifica se o endereço é válido
+        _endereco = endereco;
+      }
+    } catch (e) {
+      throw Exception('Endereço inválido: ${e.toString()}');
+    }
+  }
 
-    _endereco = endereco;
+  set urlAvatar(String? urlAvatar) {
+    if (urlAvatar == null) throw Exception('URL não pode ser nulo.');
+    _urlAvatar = urlAvatar;
   }
 
   Future<DTOCliente> salvar(DTOCliente dto) async {
@@ -131,7 +142,7 @@ class Cliente {
     return true;
   }
 
-  Future<List<DTOCliente>> consutlar() async {
+  Future<List<DTOCliente>> consultar() async {
     return await dao.consultar();
   }
 }

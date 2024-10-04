@@ -1,6 +1,6 @@
 
 import 'package:path/path.dart';
-import 'package:pudins_da_nega/banco/script.dart';
+import 'package:pudins_da_nega/banco/sqlite/script.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Conexao {

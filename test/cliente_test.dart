@@ -1,228 +1,127 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pudins_da_nega/banco/sqlite/dao/dao_cliente.dart';
 import 'package:pudins_da_nega/dominio/cadastro/cliente.dart';
 import 'package:pudins_da_nega/dominio/cadastro/endereco.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_cliente.dart';
 import 'package:pudins_da_nega/dominio/interface/i_dao_cliente.dart';
 
-class MockDAOCliente implements IDAOCliente {
-  @override
-  Future<DTOCliente> salvar(DTOCliente dto) async {
-    return dto;
-  }
-
-  @override
-  Future<bool> alterarStatus(int id) async {
-    return true;
-  }
-
-  @override
-  Future<DTOCliente> alterar(DTOCliente dto) {
-    // TODO: implement alterar
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<DTOCliente>> consultar() {
-    // TODO: implement consultar
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DTOCliente> consultarPorId(int id) {
-    // TODO: implement consultarPorId
-    throw UnimplementedError();
-  }
-}
-
 void main() {
-  var cliente = Cliente(dao: MockDAOCliente());
+  var dtoCliente = DTOCliente(
+    id: 1,
+    nome: 'João da Silva',
+    cpf: '12345678909',
+    cep: '12345-678',
+    urlAvatar: 'aaaaaaaa',
+    endereco: Endereco(
+        rua: 'Rua A',
+        numero: 123,
+        cidade: 'Cidade X',
+        estado: 'PR',
+        complemento: 'Casa',
+        bairro: 'Jardim Ipe',
+        id: 1),
+    telefone: '(41) 9 9999-9999',
+    status: 'I',
+  );
+  var daoCliente = DAOCliente();
+  var cliente = Cliente(dao: daoCliente);
+  cliente.validar(dto: dtoCliente);
+
   group('Entidade Cliente', () {
     group('Teste de Nome', () {
       test('Nome válido', () {
-        cliente.nome = 'João da Silva';
         expect(
-          () => cliente.ehNomeValido(),
+          () => cliente.nome = 'João da Silva',
           returnsNormally,
         );
       });
 
       test('Nome vazio', () {
-        cliente.nome = '';
-        expect(() => cliente.ehNomeValido(), throwsException);
+        expect(() => cliente.nome = '', throwsException);
       });
 
       test('Nome com caracteres inválidos', () {
-        cliente.nome = 'João123';
         expect(
-          () => cliente.ehNomeValido(),
+          () => cliente.nome = 'João123',
           throwsException,
         );
       });
 
       test('Nome muito curto', () {
-        cliente.nome = 'Jo';
         expect(
-          () => cliente.ehNomeValido(),
+          () => cliente.nome = 'Jo',
           throwsException,
         );
       });
 
       test('Nome muito longo', () {
-        cliente.nome = 'A' * 151;
         expect(
-          () => cliente.ehNomeValido(),
-          throwsException,
-        );
-      });
-    });
-/*
-    group('Teste de CEP', () {
-      test('CEP válido', () {
-        expect(
-          () => Cliente(
-            dao: MockDAOCliente(),
-            dto: DTOCliente(
-              id: 1,
-              nome: 'João da Silva',
-              cpf: '070.304.390-07',
-              endereco: Endereco(
-                rua: 'Rua das Flores',
-                numero: 123,
-                complemento: 'Apto',
-                bairro: 'Centro',
-                cidade: 'Curitiba',
-                estado: 'PR',
-              ),
-              telefone: '(41) 9 9876-5432',
-              cep: '01234-567',
-            ),
-          ).ehCEPValido(),
-          returnsNormally,
-        );
-      });
-
-      test('CEP vazio', () {
-        expect(
-          () => Cliente(
-            dao: MockDAOCliente(),
-            dto: DTOCliente(
-              id: 1,
-              nome: 'João da Silva',
-              cpf: '070.304.390-07',
-              endereco: Endereco(
-                rua: 'Rua das Flores',
-                numero: 123,
-                complemento: 'Apto',
-                bairro: 'Centro',
-                cidade: 'Curitiba',
-                estado: 'PR',
-              ),
-              telefone: '(41) 9 9876-5432',
-              cep: '',
-            ),
-          ).ehCEPValido(),
-          throwsException,
-        );
-      });
-
-      test('CEP com formato inválido', () {
-        expect(
-          () => Cliente(
-            dao: MockDAOCliente(),
-            dto: DTOCliente(
-              id: 1,
-              nome: 'João da Silva',
-              cpf: '070.304.390-07',
-              endereco: Endereco(
-                rua: 'Rua das Flores',
-                numero: 123,
-                complemento: 'Apto',
-                bairro: 'Centro',
-                cidade: 'Curitiba',
-                estado: 'PR',
-              ),
-              telefone: '(41) 9 9876-5432',
-              cep: '01234567',
-            ),
-          ).ehCEPValido(),
+          () => cliente.nome = 'A' * 151,
           throwsException,
         );
       });
     });
 
-    group('Teste de Telefone', () {
-      test('Telefone válido', () {
+    group('Teste de CPF', () {
+      test('CPF válido', () {
         expect(
-          () => Cliente(
-            dao: MockDAOCliente(),
-            dto: DTOCliente(
-              id: 1,
-              nome: 'João da Silva',
-              cpf: '070.304.390-07',
-              endereco: Endereco(
-                rua: 'Rua das Flores',
-                numero: 123,
-                complemento: 'Apto',
-                bairro: 'Centro',
-                cidade: 'Curitiba',
-                estado: 'PR',
-              ),
-              telefone: '(41) 9 9876-5432',
-              cep: '01234-567',
-            ),
-          ).ehTelefoneValido(),
+          () => cliente.cpf = '12345678909',
           returnsNormally,
         );
       });
 
-      test('Telefone vazio', () {
-        expect(
-          () => Cliente(
-            dao: MockDAOCliente(),
-            dto: DTOCliente(
-              id: 1,
-              nome: 'João da Silva',
-              cpf: '070.304.390-07',
-              endereco: Endereco(
-                rua: 'Rua das Flores',
-                numero: 123,
-                complemento: 'Apto',
-                bairro: 'Centro',
-                cidade: 'Curitiba',
-                estado: 'PR',
-              ),
-              telefone: '',
-              cep: '01234-567',
-            ),
-          ).ehTelefoneValido(),
-          throwsException,
-        );
+      test('CPF nulo', () {
+        expect(() => cliente.cpf = null, throwsException);
       });
 
-      test('Telefone com formato inválido', () {
-        expect(
-          () => Cliente(
-            dao: MockDAOCliente(),
-            dto: DTOCliente(
-              id: 1,
-              nome: 'João da Silva',
-              cpf: '070.304.390-07',
-              endereco: Endereco(
-                rua: 'Rua das Flores',
-                numero: 123,
-                complemento: 'Apto',
-                bairro: 'Centro',
-                cidade: 'Curitiba',
-                estado: 'PR',
-              ),
-              telefone: '41998765432', // Sem o formato adequado
-              cep: '01234-567',
-            ),
-          ).ehTelefoneValido(),
-          throwsException,
-        );
+      test('CPF vazio', () {
+        expect(() => cliente.cpf = '', throwsException);
       });
-    });*/
+    });
+
+    group('Interação com Endereço', () {
+      test('Endereço válido', () {
+        // Instanciando um objeto de Endereco com dados válidos
+        var endereco = Endereco(
+          numero: 123,
+          complemento: 'Apartamento',
+          rua: 'Rua A',
+          bairro: 'Centro',
+          cidade: 'Cidade X',
+          estado: 'PR',
+        );
+        // Definindo o endereço no cliente e validando
+        expect(() => cliente.endereco = endereco, returnsNormally);
+      });
+
+      test('Endereço sem rua', () {
+        var enderecoInvalido = Endereco(
+            rua: null,
+            numero: 123,
+            complemento: 'Ap 12',
+            bairro: 'Centro',
+            cidade: 'Cidade X',
+            estado: 'PR');
+        expect(() => cliente.endereco = enderecoInvalido, throwsException);
+      });
+    });
+
+    group('Funções CRUD', () {
+      test('Salvar cliente', () async {
+        
+        var clienteSalvo = await cliente.salvar(dtoCliente);
+        expect(clienteSalvo.nome, equals(dtoCliente.nome));
+      });
+
+      test('Alterar cliente', () async {
+        DTOCliente clienteAlterado = await cliente.alterar(1);
+        expect(clienteAlterado.id, equals(1));
+      });
+
+      test('Excluir cliente', () async {
+        var excluido = await cliente.excluir(1);
+        expect(excluido, isTrue);
+      });
+    });
   });
-  
 }

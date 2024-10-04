@@ -7,8 +7,15 @@ class Endereco {
   late String? cidade;
   late String? estado;
 
-  Endereco(dynamic? String? rua, int? numero, String? complemento, String? bairrom,
-      String? cidade, String? estado) {}
+  Endereco({
+    this.id,
+    required this.rua,
+    required this.numero,
+    required this.complemento,
+    required this.bairro,
+    required this.cidade,
+    required this.estado,
+  });
 
   enderecoValidacao() {
     ehRuaValido();
@@ -22,9 +29,9 @@ class Endereco {
   ehRuaValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (rua.isEmpty) {
+    if (rua == null || rua!.isEmpty) {
       throw Exception('A rua é obrigatória');
-    } else if (!formato.hasMatch(rua)) {
+    } else if (!formato.hasMatch(rua!)) {
       throw Exception(
           'A rua deve ter apenas caracteres alfabéticos, acentuações e espaços');
     }
@@ -33,7 +40,7 @@ class Endereco {
   ehNumeroValido() {
     if (numero == '' || numero == null) {
       throw Exception('O numero não pode ser vazio');
-    } else if (numero < 0) {
+    } else if (numero! < 0) {
       throw Exception('O numero do endereço não pode ser negativo');
     }
   }
@@ -41,9 +48,9 @@ class Endereco {
   ehComplementoValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (complemento.isEmpty) {
+    if (complemento == null || complemento!.isEmpty) {
       throw Exception('O complemento é obrigatória');
-    } else if (!formato.hasMatch(complemento)) {
+    } else if (!formato.hasMatch(complemento!)) {
       throw Exception(
           'O complemento deve ter apenas caracteres alfabéticos, acentuações e espaços');
     }
@@ -52,9 +59,9 @@ class Endereco {
   ehBairroValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (bairro.isEmpty) {
+    if (bairro == null || bairro!.isEmpty) {
       throw Exception('O bairro é obrigatório');
-    } else if (!formato.hasMatch(bairro)) {
+    } else if (!formato.hasMatch(bairro!)) {
       throw Exception(
           'O bairro deve ter apenas caracteres alfabéticos, acentuações e espaços');
     }
@@ -63,9 +70,9 @@ class Endereco {
   ehCidadeValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (cidade.isEmpty) {
+    if (cidade == null || cidade!.isEmpty) {
       throw Exception('A cidade é obrigatória');
-    } else if (!formato.hasMatch(cidade)) {
+    } else if (!formato.hasMatch(cidade!)) {
       throw Exception(
           'A cidade deve ter apenas caracteres alfabéticos, acentuações e espaços');
     }
@@ -74,12 +81,12 @@ class Endereco {
   ehEstadoValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (estado.isEmpty) {
+    if (estado == null || estado!.isEmpty) {
       throw Exception('A sigla do estado é obrigatório');
-    } else if (!formato.hasMatch(estado)) {
+    } else if (!formato.hasMatch(estado!)) {
       throw Exception(
           'A sigla do estado deve ter apenas caracteres alfabéticos');
-    } else if (estado.length > 2 || estado.length < 2) {
+    } else if (estado!.length > 2 || estado!.length < 2) {
       throw Exception('O estado deve possuir apenas 2 letras');
     }
   }
