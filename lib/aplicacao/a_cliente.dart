@@ -26,6 +26,7 @@ class ACliente {
   }
 
   Future<List<DTOCliente>> consultar() async {
+      print('A função consultar() de ACliente foi acessada.');
     return await cliente.consultar();
   }
 }

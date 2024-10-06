@@ -29,7 +29,7 @@ class Endereco {
   ehRuaValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (rua == null || rua!.isEmpty) {
+    if (rua == null) {
       throw Exception('A rua é obrigatória');
     } else if (!formato.hasMatch(rua!)) {
       throw Exception(
@@ -38,7 +38,7 @@ class Endereco {
   }
 
   ehNumeroValido() {
-    if (numero == '' || numero == null) {
+    if ( numero == null) {
       throw Exception('O numero não pode ser vazio');
     } else if (numero! < 0) {
       throw Exception('O numero do endereço não pode ser negativo');
@@ -48,7 +48,7 @@ class Endereco {
   ehComplementoValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (complemento == null || complemento!.isEmpty) {
+    if (complemento == null) {
       throw Exception('O complemento é obrigatória');
     } else if (!formato.hasMatch(complemento!)) {
       throw Exception(
@@ -59,7 +59,7 @@ class Endereco {
   ehBairroValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (bairro == null || bairro!.isEmpty) {
+    if (bairro == null) {
       throw Exception('O bairro é obrigatório');
     } else if (!formato.hasMatch(bairro!)) {
       throw Exception(
@@ -81,7 +81,7 @@ class Endereco {
   ehEstadoValido() {
     var formato = RegExp(r'^[a-zA-ZÀ-ÿ\s]+$');
 
-    if (estado == null || estado!.isEmpty) {
+    if (estado == null) {
       throw Exception('A sigla do estado é obrigatório');
     } else if (!formato.hasMatch(estado!)) {
       throw Exception(

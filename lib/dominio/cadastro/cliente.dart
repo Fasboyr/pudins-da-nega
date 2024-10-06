@@ -21,18 +21,17 @@ class Cliente {
     nome = dto.nome;
     cpf = dto.cpf;
     cep = dto.cep;
-    endereco = dto.endereco;
+    endereco = Endereco(
+      rua: dto.endereco.rua,
+      numero: dto.endereco.numero,
+      complemento: dto.endereco.complemento,
+      bairro: dto.endereco.bairro,
+      cidade: dto.endereco.cidade,
+      estado: dto.endereco.estado,
+    );
     telefone = dto.telefone;
     status = dto.status;
     urlAvatar = dto.urlAvatar;
-    endereco = Endereco(
-            rua: dto.endereco.rua,
-            numero: dto.endereco.numero,
-            complemento: dto.endereco.complemento,
-            bairro: dto.endereco.bairro,
-            cidade: dto.endereco.cidade,
-            estado: dto.endereco.estado)
-        .enderecoValidacao();
     cpfValidador.CPF(cpf).validacao();
   }
 
@@ -42,6 +41,7 @@ class Cliente {
   Endereco? get endereco => _endereco;
   String? get telefone => _telefone;
   String? get status => _status;
+  String? get urlAvatar => _urlAvatar;
 
   set id(int? id) {
     if (id == null) throw Exception('ID não pode ser nulo');
@@ -143,6 +143,7 @@ class Cliente {
   }
 
   Future<List<DTOCliente>> consultar() async {
+    print('A função consultar() de Cliente foi acessada.');
     return await dao.consultar();
   }
 }

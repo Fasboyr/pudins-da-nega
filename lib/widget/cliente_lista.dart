@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pudins_da_nega/aplicacao/a_cliente.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_cliente.dart';
+import 'package:pudins_da_nega/widget/cliente_lista_back.dart';
 
 class ClienteLista extends StatelessWidget {
+  final _back = ClienteListBack();
 
-
-    const ClienteLista({super.key});
 
   CircleAvatar circleAvatar(String? url)  {
     var avatar = const CircleAvatar(child: Icon(Icons.person));
@@ -56,12 +56,12 @@ class ClienteLista extends StatelessWidget {
     var lista = apCliente.consultar();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Lista de Cleitens'),
+          title: const Text('Lista de Clientes'),
           actions: [
             IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  //_back.goToForm(context);
+                  _back.goToForm(context);
                 })
           ],
         ),
@@ -81,15 +81,15 @@ class ClienteLista extends StatelessWidget {
                       leading: circleAvatar(cliente.urlAvatar),
                       title: Text(cliente.nome),
                       onTap: () {
-                        //_back.goToDetails(context, contato);
+                        _back.goToDetails(context, cliente);
                       },
-                      subtitle: Text(cliente.telefone ?? ''),
+                      subtitle: Text(cliente.telefone),
                       trailing: SizedBox(
                         width: 100,
                         child: Row(
                           children: [
                             iconEditButton(() {
-                              // _back.goToForm(context, contato);
+                               _back.goToForm(context, cliente);
                             }),
                             iconRemoveButton(context, () {
                               // _back.remove(contato.id, context);

@@ -5,8 +5,8 @@ class DTOCliente {
   late String nome;
   late String cpf;
   late String cep;
-   final String status;
-  final String? urlAvatar;
+  late String status;
+  late String? urlAvatar;
   late Endereco endereco;
   late String telefone;
 

@@ -11,11 +11,11 @@ class DAOCliente implements IDAOCliente {
   ''';
 
   final sqlInserirCliente = '''
-    'INSERT INTO cliente (nome, cpf, cep, status,url_avatar, telefone, , endereco_id) VALUES (?,?,?,?,?,?)'
+    INSERT INTO cliente (nome, cpf, cep, status,url_avatar, telefone, endereco_id) VALUES (?,?,?,?,?,?)
   ''';
 
   final sqlAlterarEndereco = '''
-    UPDATE endereco SET rua=?, numero=?, complemento=?, bairro=?, cidade=?, estado=?,
+    UPDATE endereco SET rua=?, numero=?, complemento=?, bairro=?, cidade=?, estado=?
     WHERE id = ?
   ''';
 
@@ -29,29 +29,39 @@ class DAOCliente implements IDAOCliente {
     WHERE id = ?
   ''';
 
-  final sqlConsultarPorId = '''
-    SELECT * FROM cliente WHERE id = ?;
+ final sqlConsultarPorId = '''
+    SELECT c.*, e.*
+    FROM cliente c
+    JOIN endereco e ON c.endereco_id = e.id
+    WHERE c.id = ?;
   ''';
 
+
   final sqlConsultar = '''
-    SELECT * FROM cliente;
+    SELECT c.*, e.*
+    FROM cliente c
+    JOIN endereco e ON c.endereco_id = e.id;
   ''';
+
 
   @override
   Future<List<DTOCliente>> consultar() async {
+    print('A função consultar() do DAO foi acessada.');
     _db = await Conexao.abrir();
+    print('Retornando ao consultar a partir do banco');
     var resultado = await _db.rawQuery(sqlConsultar);
     List<DTOCliente> clientes = List.generate(resultado.length, (i) {
       var linha = resultado[i];
       return DTOCliente(
           id: linha['id'],
           nome: linha['nome'].toString(),
-          cpf: linha['CPF'].toString(),
+          cpf: linha['cpf'].toString(),
           cep: linha['cep'].toString(),
           status: linha['status'].toString(),
           urlAvatar: linha['url_avatar'].toString(),
           telefone: linha['telefone'].toString(),
           endereco: Endereco(
+            id: linha['e.id'],
             rua: linha['rua'].toString(),
             numero: int.parse(linha['numero'].toString()),
             complemento: linha['complemento'].toString(),
@@ -70,12 +80,13 @@ class DAOCliente implements IDAOCliente {
     DTOCliente cliente = DTOCliente(
         id: resultado['id'],
         nome: resultado['nome'].toString(),
-        cpf: resultado['CPF'].toString(),
+        cpf: resultado['cpf'].toString(),
         cep: resultado['cep'].toString(),
         status: resultado['status'].toString(),
         urlAvatar: resultado['url_avatar'].toString(),
         telefone: resultado['telefone'].toString(),
         endereco: Endereco(
+          id: resultado['e.idid'],
           rua: resultado['rua'].toString(),
           numero: int.parse(resultado['numero'].toString()),
           complemento: resultado['complemento'].toString(),
@@ -99,8 +110,15 @@ class DAOCliente implements IDAOCliente {
       dto.endereco.estado
     ]);
 
-    int clienteId = await _db.rawInsert(sqlInserirCliente,
-        [dto.nome, dto.cpf, dto.cep, dto.telefone, enderecoId]);
+    int clienteId = await _db.rawInsert(sqlInserirCliente, [
+      dto.nome,
+      dto.cpf,
+      dto.cep,
+      dto.status,
+      dto.urlAvatar,
+      dto.telefone,
+      enderecoId
+    ]);
 
     dto.id = clienteId;
     return dto;
@@ -116,12 +134,20 @@ class DAOCliente implements IDAOCliente {
       dto.endereco.complemento,
       dto.endereco.bairro,
       dto.endereco.cidade,
-      dto.endereco
-          .estado, 
+      dto.endereco.estado,
+      dto.endereco.id
     ]);
 
-    await _db.rawUpdate(
-        sqlAlterarCliente, [dto.nome, dto.cep, dto.cpf, dto.telefone, dto.id]);
+    await _db.rawUpdate(sqlAlterarCliente, [
+      dto.nome,
+      dto.cpf,
+      dto.cep,
+      dto.status,
+      dto.urlAvatar,
+      dto.telefone,
+      dto.endereco.id,
+      dto.id
+    ]);
     return dto;
   }
 
