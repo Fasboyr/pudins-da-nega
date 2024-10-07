@@ -70,27 +70,28 @@ class ClienteForm extends StatelessWidget {
       decoration: InputDecoration(labelText: 'Status:'),
     );
   }
-/*
+
  Widget fieldEndereco(ClienteFormBack back) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
+    
     children: [
       Text('Endereço:',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
 
       // Campo Rua
       TextFormField(
-        initialValue: back.clienteService.endereco!.rua ?? ' ',
-        onSaved: (newValue) => back.clienteService.endereco!.rua = newValue!,
+        initialValue: back.cliente.endereco.rua,
+        onSaved: (newValue) => back.cliente.endereco.rua = newValue!,
         decoration: InputDecoration(labelText: 'Rua:'),
         validator: (value) => back.validateRua(value),
       ),
 
       // Campo Número
       TextFormField(
-        initialValue: (back.clienteService.endereco!.numero?.toString() ?? ' '),
+        initialValue: (back.cliente.endereco.numero?.toString() ?? ' '),
         onSaved: (newValue) =>
-            back.clienteService.endereco!.numero = int.parse(newValue!),
+            back.cliente.endereco.numero = int.parse(newValue!),
         decoration: InputDecoration(labelText: 'Número:'),
         validator: (value) => back.validateNumero(value),
         keyboardType: TextInputType.number,
@@ -98,39 +99,39 @@ class ClienteForm extends StatelessWidget {
 
       // Campo Bairro
       TextFormField(
-        initialValue: back.clienteService.endereco!.bairro ?? ' ',
-        onSaved: (newValue) => back.clienteService.endereco!.bairro = newValue!,
+        initialValue: back.cliente.endereco.bairro ?? ' ',
+        onSaved: (newValue) => back.cliente.endereco!.bairro = newValue!,
         decoration: InputDecoration(labelText: 'Bairro:'),
         validator: (value) => back.validateBairro(value),
       ),
 
       // Campo Cidade
       TextFormField(
-        initialValue: back.clienteService.endereco!.cidade ?? ' ',
-        onSaved: (newValue) => back.clienteService.endereco!.cidade = newValue!,
+        initialValue: back.cliente.endereco.cidade ?? ' ',
+        onSaved: (newValue) => back.cliente.endereco!.cidade = newValue!,
         decoration: InputDecoration(labelText: 'Cidade:'),
         validator: (value) => back.validateCidade(value),
       ),
 
       // Campo Estado
       TextFormField(
-        initialValue: back.clienteService.endereco!.estado ?? ' ',
-        onSaved: (newValue) => back.clienteService.endereco!.estado = newValue!,
+        initialValue: back.cliente.endereco.estado ?? ' ',
+        onSaved: (newValue) => back.cliente.endereco?.estado = newValue!,
         decoration: InputDecoration(labelText: 'Estado:'),
         validator: (value) => back.validateEstado(value),
       ),
 
       // Campo Complemento
       TextFormField(
-        initialValue: back.clienteService.endereco!.complemento ?? ' ',
+        initialValue: back.cliente.endereco.complemento ?? ' ',
         onSaved: (newValue) =>
-            back.clienteService.endereco!.complemento = newValue!,
+            back.cliente.endereco.complemento = newValue!,
         decoration: InputDecoration(labelText: 'Complemento:'),
         validator: (value) => back.validateComplemento(value),
       ),
     ],
   );
-}*/
+}
 
   Widget fieldUrlAvatar(ClienteFormBack back) {
     return TextFormField(
@@ -174,6 +175,7 @@ class ClienteForm extends StatelessWidget {
               fieldPhone(_back),
               fieldStatus(_back),
               fieldUrlAvatar(_back),
+              fieldEndereco(_back),
             ],
           ),
         ),
