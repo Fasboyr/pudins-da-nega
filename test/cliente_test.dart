@@ -108,7 +108,6 @@ void main() {
 
     group('Funções CRUD', () {
       test('Salvar cliente', () async {
-        
         var clienteSalvo = await cliente.salvar(dtoCliente);
         expect(clienteSalvo.nome, equals(dtoCliente.nome));
       });
@@ -122,6 +121,30 @@ void main() {
         var excluido = await cliente.excluir(1);
         expect(excluido, isTrue);
       });
+    });
+  });
+
+  group('Teste de Telefone', () {
+    test('Telefone válido com DDD', () {
+      expect(() => cliente.telefone = '(41) 9 9999-9999', returnsNormally);
+    });
+    test('Telefone sem DDD', () {
+      expect(() => cliente.telefone = '9 9999-9999', throwsException);
+    });
+    test('Telefone inválido', () {
+      expect(() => cliente.telefone = '99999', throwsException);
+    });
+  });
+
+  group('Tabela de Decisão para CEP', () {
+    test('CEP válido', () {
+      expect(() => cliente.cep = '12345-678' , returnsNormally);
+    });
+    test('CEP com formatação incorreta', () {
+      expect(() => cliente.cep = '1234-567', throwsException);
+    });
+    test('CEP vazio', () {
+      expect(() => cliente.cep = '', throwsException);
     });
   });
 }
