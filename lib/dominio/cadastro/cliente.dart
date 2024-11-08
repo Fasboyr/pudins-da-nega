@@ -33,6 +33,7 @@ class Cliente {
     status = dto.status;
     urlAvatar = dto.urlAvatar;
     cpfValidador.CPF(cpf).validacao();
+    print("validou");
   }
 
   String? get nome => _nome;
@@ -127,6 +128,7 @@ class Cliente {
   }
 
   Future<DTOCliente> salvar(DTOCliente dto) async {
+    print("Entrou no salvar do cliente service");
     validar(dto: dto);
     return await dao.salvar(dto);
   }

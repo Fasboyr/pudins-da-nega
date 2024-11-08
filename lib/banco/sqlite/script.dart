@@ -36,12 +36,12 @@ const inserirRegistros = [
   INSERT INTO endereco (rua, numero, complemento, bairro, cidade, estado) VALUES ('Rua C', 789, 'Bloco B', 'Bairro Norte', 'Cidade Z', 'RJ');
   ''',
   '''
-  INSERT INTO cliente (nome, cpf, cep, telefone, status, url_avatar, endereco_id) VALUES ('JOAQUIM', '391.650.590-42', '80000-000', '(41) 99999-9999', 'A', 'www.site.com', 1);
+  INSERT INTO cliente (nome, cpf, cep, telefone, status, url_avatar, endereco_id) VALUES ('JOAQUIM', '391.650.590-42', '80000-000', '(41) 9 9999-9999', 'A', 'www.site.com', 1);
   ''',
   '''
-  INSERT INTO cliente (nome, cpf, cep, telefone, status, url_avatar, endereco_id) VALUES ('MARIANA', '724.876.030-70', '80001-000', '(11) 98888-8888', 'I', 'www.site.com', 2);
+  INSERT INTO cliente (nome, cpf, cep, telefone, status, url_avatar, endereco_id) VALUES ('MARIANA', '724.876.030-70', '80001-000', '(11) 9 8888-8888', 'I', 'www.site.com', 2);
   ''',
   '''
-  INSERT INTO cliente (nome, cpf, cep, telefone, status, url_avatar, endereco_id) VALUES ('ROBERTO', '959.358.840-03', '80002-000', '(21) 97777-7777', 'A', 'www.site.com', 3);
+  INSERT INTO cliente (nome, cpf, cep, telefone, status, url_avatar, endereco_id) VALUES ('ROBERTO', '959.358.840-03', '80002-000', '(21) 9 7777-7777', 'A', 'www.site.com', 3);
   '''
 ];

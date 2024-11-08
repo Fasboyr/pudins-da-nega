@@ -13,6 +13,7 @@ class ACliente {
   }
 
   Future<DTOCliente> salvar(DTOCliente dto) async {
+    print("eNTOU NO SALVAR DO APLICAÇÃO");
     return await cliente.salvar(dto);
   }
 
@@ -26,7 +27,7 @@ class ACliente {
   }
 
   Future<List<DTOCliente>> consultar() async {
-      print('A função consultar() de ACliente foi acessada.');
+    print('A função consultar() de ACliente foi acessada.');
     return await cliente.consultar();
   }
 }

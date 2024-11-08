@@ -18,7 +18,7 @@ class ClienteFormBack {
   late bool _enderecoIsValid;
   late bool _urlAvatarIsValid;
 
-  bool get isValid => 
+  bool get isValid =>
       _nomeIsValid &&
       _cpfIsValid &&
       _cepIsValid &&
@@ -30,22 +30,23 @@ class ClienteFormBack {
   // Construtor para inicializar a entidade DTOCliente
   ClienteFormBack(BuildContext context) {
     var parameter = ModalRoute.of(context)!.settings.arguments;
-    cliente = (parameter == null) ? DTOCliente(
-      nome: '',
-      cpf: '',
-      cep: '',
-      endereco: Endereco(
-        rua: '',
-        numero: 0,
-        bairro: '',
-        cidade: '',
-        estado: '',
-        complemento: ''
-      ),
-      telefone: '',
-      status: 'A', // Inicialização padrão
-      urlAvatar: '',
-    ) : parameter as DTOCliente;
+    cliente = (parameter == null)
+        ? DTOCliente(
+            nome: '',
+            cpf: '',
+            cep: '',
+            endereco: Endereco(
+                rua: '',
+                numero: 0,
+                bairro: '',
+                cidade: '',
+                estado: '',
+                complemento: ''),
+            telefone: '',
+            status: 'A', // Inicialização padrão
+            urlAvatar: '',
+          )
+        : parameter as DTOCliente;
 
     _dao = DAOCliente();
     clienteService = Cliente(dao: _dao); // Inicializando o serviço de Cliente
@@ -53,6 +54,7 @@ class ClienteFormBack {
 
   // Função para salvar o cliente
   save() async {
+    print("Entrou no save do back");
     await clienteService.salvar(cliente); // Salvando cliente no DAO
   }
 
@@ -95,7 +97,8 @@ class ClienteFormBack {
   // Validação de Telefone
   String? validatePhone(String? telefone) {
     try {
-      clienteService.telefone = telefone; // Usa o setter para validar o telefone
+      clienteService.telefone =
+          telefone; // Usa o setter para validar o telefone
       _telefoneIsValid = true;
       return null;
     } catch (e) {
@@ -117,83 +120,85 @@ class ClienteFormBack {
 
   // Validação de Endereço
   // Validação para Rua
-String? validateRua(String? rua) {
-  try {
-    clienteService.endereco!.rua = rua;
-    _enderecoIsValid = true;
-    return null;
-  } catch (e) {
-    _enderecoIsValid = false;
-    return e.toString();
+  String? validateRua(String? rua) {
+    try {
+      clienteService.endereco!.rua = rua;
+      print('>>>>> ${rua} ${clienteService.endereco!.rua}');
+
+      _enderecoIsValid = true;
+      return null;
+    } catch (e) {
+      _enderecoIsValid = false;
+      return e.toString();
+    }
   }
-}
 
 // Validação para Número
-String? validateNumero(String? numeroStr) {
-  try {
-    int numero = int.parse(numeroStr!);
-    clienteService.endereco!.numero = numero;
-    _enderecoIsValid = true;
-    return null;
-  } catch (e) {
-    _enderecoIsValid = false;
-    return e.toString();
+  String? validateNumero(String? numeroStr) {
+    try {
+      int numero = int.parse(numeroStr!);
+      clienteService.endereco!.numero = numero;
+      _enderecoIsValid = true;
+      return null;
+    } catch (e) {
+      _enderecoIsValid = false;
+      return e.toString();
+    }
   }
-}
 
 // Validação para Bairro
-String? validateBairro(String? bairro) {
-  try {
-    clienteService.endereco!.bairro = bairro;
-    _enderecoIsValid = true;
-    return null;
-  } catch (e) {
-    _enderecoIsValid = false;
-    return e.toString();
+  String? validateBairro(String? bairro) {
+    try {
+      clienteService.endereco!.bairro = bairro;
+      _enderecoIsValid = true;
+      return null;
+    } catch (e) {
+      _enderecoIsValid = false;
+      return e.toString();
+    }
   }
-}
 
 // Validação para Cidade
-String? validateCidade(String? cidade) {
-  try {
-    clienteService.endereco!.cidade = cidade;
-    _enderecoIsValid = true;
-    return null;
-  } catch (e) {
-    _enderecoIsValid = false;
-    return e.toString();
+  String? validateCidade(String? cidade) {
+    try {
+      clienteService.endereco!.cidade = cidade;
+      _enderecoIsValid = true;
+      return null;
+    } catch (e) {
+      _enderecoIsValid = false;
+      return e.toString();
+    }
   }
-}
 
 // Validação para Estado
-String? validateEstado(String? estado) {
-  try {
-    clienteService.endereco!.estado = estado;
-    _enderecoIsValid = true;
-    return null;
-  } catch (e) {
-    _enderecoIsValid = false;
-    return e.toString();
+  String? validateEstado(String? estado) {
+    try {
+      clienteService.endereco!.estado = estado;
+      _enderecoIsValid = true;
+      return null;
+    } catch (e) {
+      _enderecoIsValid = false;
+      return e.toString();
+    }
   }
-}
 
 // Validação para Complemento
-String? validateComplemento(String? complemento) {
-  try {
-    clienteService.endereco!.complemento = complemento;
-    _enderecoIsValid = true;
-    return null;
-  } catch (e) {
-    _enderecoIsValid = false;
-    return e.toString();
+  String? validateComplemento(String? complemento) {
+    try {
+      clienteService.endereco!.complemento = complemento;
+      _enderecoIsValid = true;
+      return null;
+    } catch (e) {
+      _enderecoIsValid = false;
+      return e.toString();
+    }
   }
-}
-
 
   // Validação de URL do Avatar
   String? validateUrlAvatar(String? urlAvatar) {
     try {
-      clienteService.urlAvatar = urlAvatar; // Usa o setter para validar a URL do avatar
+      clienteService.urlAvatar =
+          urlAvatar; // Usa o setter para validar a URL do avatar
       _urlAvatarIsValid = true;
       return null;
     } catch (e) {

@@ -29,20 +29,18 @@ class DAOCliente implements IDAOCliente {
     WHERE id = ?
   ''';
 
- final sqlConsultarPorId = '''
+  final sqlConsultarPorId = '''
     SELECT c.*, e.*
     FROM cliente c
     JOIN endereco e ON c.endereco_id = e.id
     WHERE c.id = ?;
   ''';
 
-
   final sqlConsultar = '''
     SELECT c.*, e.*
     FROM cliente c
     JOIN endereco e ON c.endereco_id = e.id;
   ''';
-
 
   @override
   Future<List<DTOCliente>> consultar() async {
@@ -121,6 +119,7 @@ class DAOCliente implements IDAOCliente {
     ]);
 
     dto.id = clienteId;
+    print("dto que foi salvo ${dto}");
     return dto;
   }
 
