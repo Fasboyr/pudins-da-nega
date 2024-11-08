@@ -163,7 +163,12 @@ class ClienteForm extends StatelessWidget {
             icon: Icon(Icons.save),
             onPressed: () {
               if (_form.currentState!.validate()) {
+                print('entrou no if');
                 _form.currentState!.save();
+                print('back ta valido ${_back.isValid}');
+                
+
+                
                 if (_back.isValid) {
                   print('bACK TA VALIDO');
                   _back.save();

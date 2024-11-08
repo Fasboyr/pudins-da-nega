@@ -63,6 +63,7 @@ class ClienteFormBack {
     try {
       clienteService.nome = nome; // Usa o setter para validar o nome
       _nomeIsValid = true;
+      print('Nome ta valido ${_nomeIsValid}');
       return null;
     } catch (e) {
       _nomeIsValid = false;
@@ -75,6 +76,7 @@ class ClienteFormBack {
     try {
       clienteService.cpf = cpf; // Usa o setter para validar o CPF
       _cpfIsValid = true;
+      print('cpf ta valido ${_cpfIsValid}');
       return null;
     } catch (e) {
       _cpfIsValid = false;
@@ -87,6 +89,7 @@ class ClienteFormBack {
     try {
       clienteService.cep = cep; // Usa o setter para validar o CEP
       _cepIsValid = true;
+      print('cep ta valido ${_cepIsValid}');
       return null;
     } catch (e) {
       _cepIsValid = false;
@@ -100,6 +103,7 @@ class ClienteFormBack {
       clienteService.telefone =
           telefone; // Usa o setter para validar o telefone
       _telefoneIsValid = true;
+      print('telefone ta valido ${_telefoneIsValid}');
       return null;
     } catch (e) {
       _telefoneIsValid = false;
@@ -111,6 +115,7 @@ class ClienteFormBack {
     try {
       clienteService.status = status; // Usa o setter para validar o status
       _statusIsValid = true;
+      print('status ta valido $_statusIsValid{}');
       return null;
     } catch (e) {
       _statusIsValid = false;
@@ -124,8 +129,8 @@ class ClienteFormBack {
     try {
       clienteService.endereco!.rua = rua;
       print('>>>>> ${rua} ${clienteService.endereco!.rua}');
-
       _enderecoIsValid = true;
+      print('rua ta valido ${_enderecoIsValid}');
       return null;
     } catch (e) {
       _enderecoIsValid = false;
@@ -139,6 +144,7 @@ class ClienteFormBack {
       int numero = int.parse(numeroStr!);
       clienteService.endereco!.numero = numero;
       _enderecoIsValid = true;
+      print('numero ta valido ${_enderecoIsValid}');
       return null;
     } catch (e) {
       _enderecoIsValid = false;
@@ -151,6 +157,7 @@ class ClienteFormBack {
     try {
       clienteService.endereco!.bairro = bairro;
       _enderecoIsValid = true;
+      print(' bairro ta valido ${_enderecoIsValid}');
       return null;
     } catch (e) {
       _enderecoIsValid = false;
@@ -163,6 +170,7 @@ class ClienteFormBack {
     try {
       clienteService.endereco!.cidade = cidade;
       _enderecoIsValid = true;
+      print('cidade ta valido ${_enderecoIsValid}');
       return null;
     } catch (e) {
       _enderecoIsValid = false;
@@ -175,6 +183,7 @@ class ClienteFormBack {
     try {
       clienteService.endereco!.estado = estado;
       _enderecoIsValid = true;
+      print(' estado ta valido ${_enderecoIsValid}');
       return null;
     } catch (e) {
       _enderecoIsValid = false;
@@ -187,6 +196,7 @@ class ClienteFormBack {
     try {
       clienteService.endereco!.complemento = complemento;
       _enderecoIsValid = true;
+      print('complemento ta valido $_enderecoIsValid}');
       return null;
     } catch (e) {
       _enderecoIsValid = false;
@@ -200,6 +210,7 @@ class ClienteFormBack {
       clienteService.urlAvatar =
           urlAvatar; // Usa o setter para validar a URL do avatar
       _urlAvatarIsValid = true;
+      print('avatar ta valido ${_urlAvatarIsValid}');
       return null;
     } catch (e) {
       _urlAvatarIsValid = false;
