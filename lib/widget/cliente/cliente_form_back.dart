@@ -115,7 +115,7 @@ class ClienteFormBack {
     try {
       clienteService.status = status; // Usa o setter para validar o status
       _statusIsValid = true;
-      print('status ta valido $_statusIsValid{}');
+      print('status ta valido ${_statusIsValid}');
       return null;
     } catch (e) {
       _statusIsValid = false;
@@ -123,14 +123,20 @@ class ClienteFormBack {
     }
   }
 
-  // Validação de Endereço
-  // Validação para Rua
-  String? validateRua(String? rua) {
+  String? validateEndereco(Endereco? endereco) {
+    print('Endereço: ${endereco}');
     try {
-      clienteService.endereco!.rua = rua;
-      print('>>>>> ${rua} ${clienteService.endereco!.rua}');
+      clienteService.endereco = Endereco(
+        rua:
+            endereco?.rua ?? '',
+        numero: endereco?.numero ?? 0, 
+        complemento: endereco?.complemento ?? '',
+        bairro: endereco?.bairro ?? '',
+        cidade: endereco?.cidade ?? '',
+        estado: endereco?.estado ?? '',
+      );
+      print('Endereço no clienteService: ${clienteService.endereco}');
       _enderecoIsValid = true;
-      print('rua ta valido ${_enderecoIsValid}');
       return null;
     } catch (e) {
       _enderecoIsValid = false;
@@ -138,8 +144,34 @@ class ClienteFormBack {
     }
   }
 
+  // Validação de Endereço
+  // Validação para Rua
+  String? validateRua(String? rua) {
+    print('Entrou no validateRua');
+    print('>>>> Valor da rua: $rua');
+
+    try {
+      print(
+          '>>>> Valor da rua antes da atribuição: ${clienteService.endereco!.rua}');
+
+      clienteService.endereco!.rua =
+          rua; // Agora, temos a garantia de que endereco não é null
+      _enderecoIsValid = true;
+      print('Rua válida: $_enderecoIsValid');
+
+      return null; // Se tudo ocorreu bem, retorna null indicando que a validação passou
+    } catch (e) {
+      _enderecoIsValid = false;
+      print('Erro: $e');
+      return e
+          .toString(); // Retorna a mensagem de erro caso haja algum problema
+    }
+  }
+
 // Validação para Número
   String? validateNumero(String? numeroStr) {
+    print('entrou no validateNumero');
+    print('>>>> Valor da ${numeroStr}');
     try {
       int numero = int.parse(numeroStr!);
       clienteService.endereco!.numero = numero;

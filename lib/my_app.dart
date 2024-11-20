@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pudins_da_nega/widget/cliente_details.dart';
-import 'package:pudins_da_nega/widget/cliente_form.dart';
-import 'package:pudins_da_nega/widget/cliente_lista.dart';
+import 'package:pudins_da_nega/widget/cliente/cliente_details.dart';
+import 'package:pudins_da_nega/widget/cliente/cliente_form.dart';
+import 'package:pudins_da_nega/widget/cliente/cliente_lista.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

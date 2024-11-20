@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_cliente.dart';
-import 'package:pudins_da_nega/widget/cliente_details_back.dart';
+import 'package:pudins_da_nega/widget/cliente/cliente_details_back.dart';
 
 class ClienteDetails extends StatelessWidget {
 

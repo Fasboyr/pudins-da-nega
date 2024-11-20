@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:pudins_da_nega/widget/cliente_form_back.dart';
+import 'package:pudins_da_nega/widget/cliente/cliente_form_back.dart';
 
 class ClienteForm extends StatelessWidget {
   final _form = GlobalKey<FormState>();
@@ -71,77 +71,61 @@ class ClienteForm extends StatelessWidget {
     );
   }
 
-  Widget fieldEndereco(ClienteFormBack back) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Endereço:',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+ Widget fieldEndereco(ClienteFormBack back) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    
+    children: [
+      Text('Endereço:',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
 
-        // Campo Rua
-        TextFormField(
-          initialValue: back.cliente.endereco.rua,
-          onSaved: (newValue) => back.cliente.endereco.rua = newValue!,
-          decoration: InputDecoration(labelText: 'Rua:'),
-          validator: (value) {
-            back.validateRua(value);
-          },
-        ),
+      // Campo Rua
+      TextFormField(
+        initialValue: back.cliente.endereco.rua,
+        onSaved: (newValue) => back.cliente.endereco.rua = newValue!,
+        decoration: InputDecoration(labelText: 'Rua:'),
+      ),
 
-        // Campo Número
-        TextFormField(
-          initialValue: (back.cliente.endereco.numero?.toString() ?? ' '),
-          onSaved: (newValue) =>
-              back.cliente.endereco.numero = int.parse(newValue!),
-          decoration: InputDecoration(labelText: 'Número:'),
-          validator: (value) {
-            back.validateNumero(value);
-          },
-          keyboardType: TextInputType.number,
-        ),
+      // Campo Número
+      TextFormField(
+        initialValue: (back.cliente.endereco.numero?.toString() ?? ' '),
+        onSaved: (newValue) =>
+            back.cliente.endereco.numero = int.parse(newValue!),
+        decoration: InputDecoration(labelText: 'Número:'),
+        keyboardType: TextInputType.number,
+      ),
 
-        // Campo Bairro
-        TextFormField(
-          initialValue: back.cliente.endereco.bairro ?? ' ',
-          onSaved: (newValue) => back.cliente.endereco!.bairro = newValue!,
-          decoration: InputDecoration(labelText: 'Bairro:'),
-          validator: (value) {
-            back.validateBairro(value);
-          },
-        ),
+      // Campo Bairro
+      TextFormField(
+        initialValue: back.cliente.endereco.bairro ?? ' ',
+        onSaved: (newValue) => back.cliente.endereco!.bairro = newValue!,
+        decoration: InputDecoration(labelText: 'Bairro:'),
+      ),
 
-        // Campo Cidade
-        TextFormField(
-          initialValue: back.cliente.endereco.cidade ?? ' ',
-          onSaved: (newValue) => back.cliente.endereco!.cidade = newValue!,
-          decoration: InputDecoration(labelText: 'Cidade:'),
-          validator: (value) {
-            back.validateCidade(value);
-          },
-        ),
+      // Campo Cidade
+      TextFormField(
+        initialValue: back.cliente.endereco.cidade ?? ' ',
+        onSaved: (newValue) => back.cliente.endereco!.cidade = newValue!,
+        decoration: InputDecoration(labelText: 'Cidade:'),
+      ),
 
-        // Campo Estado
-        TextFormField(
-          initialValue: back.cliente.endereco.estado ?? ' ',
-          onSaved: (newValue) => back.cliente.endereco?.estado = newValue!,
-          decoration: InputDecoration(labelText: 'Estado:'),
-          validator: (value) {
-            back.validateEstado(value);
-          },
-        ),
+      // Campo Estado
+      TextFormField(
+        initialValue: back.cliente.endereco.estado ?? ' ',
+        onSaved: (newValue) => back.cliente.endereco?.estado = newValue!,
+        decoration: InputDecoration(labelText: 'Estado:'),
+      ),
 
-        // Campo Complemento
-        TextFormField(
-          initialValue: back.cliente.endereco.complemento ?? ' ',
-          onSaved: (newValue) => back.cliente.endereco.complemento = newValue!,
-          decoration: InputDecoration(labelText: 'Complemento:'),
-          validator: (value) {
-            back.validateComplemento(value);
-          },
-        ),
-      ],
-    );
-  }
+      // Campo Complemento
+      TextFormField(
+        initialValue: back.cliente.endereco.complemento ?? ' ',
+        onSaved: (newValue) =>
+            back.cliente.endereco.complemento = newValue!,
+        decoration: InputDecoration(labelText: 'Complemento:'),
+      ),
+    ],
+  );
+}
 
   Widget fieldUrlAvatar(ClienteFormBack back) {
     return TextFormField(
@@ -162,15 +146,10 @@ class ClienteForm extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
+              _back.validateEndereco(_back.cliente.endereco);
               if (_form.currentState!.validate()) {
-                print('entrou no if');
                 _form.currentState!.save();
-                print('back ta valido ${_back.isValid}');
-                
-
-                
                 if (_back.isValid) {
-                  print('bACK TA VALIDO');
                   _back.save();
                   Navigator.of(context).pop();
                 }

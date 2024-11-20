@@ -15,7 +15,9 @@ class Endereco {
     required this.bairro,
     required this.cidade,
     required this.estado,
-  });
+  }){
+    enderecoValidacao();
+  }
 
   enderecoValidacao() {
     ehRuaValido();

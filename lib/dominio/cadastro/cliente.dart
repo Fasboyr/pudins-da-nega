@@ -78,7 +78,7 @@ class Cliente {
 
   set status(String? status) {
     if (status == null) throw Exception('Status não pode ser nulo.');
-    if (status != 'A' && status != 'I') // Corrigido para usar '&&'
+    if (status != 'A' && status != 'I')
       throw Exception('Status deve ser "A" ou "I".');
     _status = status;
   }
@@ -112,6 +112,7 @@ class Cliente {
   }
 
   set endereco(Endereco? endereco) {
+    print('Valor de endereço ${endereco}');
     try {
       if (endereco != null) {
         endereco.enderecoValidacao(); // Verifica se o endereço é válido

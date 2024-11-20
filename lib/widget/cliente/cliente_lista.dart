@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pudins_da_nega/aplicacao/a_cliente.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_cliente.dart';
-import 'package:pudins_da_nega/widget/cliente_lista_back.dart';
+import 'package:pudins_da_nega/widget/cliente/cliente_lista_back.dart';
 
 class ClienteLista extends StatelessWidget {
   final _back = ClienteListBack();
