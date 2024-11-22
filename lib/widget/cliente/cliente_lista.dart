@@ -92,7 +92,7 @@ class ClienteLista extends StatelessWidget {
                                _back.goToForm(context, cliente);
                             }),
                             iconRemoveButton(context, () {
-                              // _back.remove(contato.id, context);
+                              // _back.remove(cliente.id, context);
                             })
                           ],
                         ),
