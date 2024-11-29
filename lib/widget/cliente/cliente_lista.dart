@@ -6,54 +6,55 @@ import 'package:pudins_da_nega/widget/cliente/cliente_lista_back.dart';
 class ClienteLista extends StatelessWidget {
   final _back = ClienteListBack();
 
-
-  CircleAvatar circleAvatar(String? url)  {
+  CircleAvatar circleAvatar(String? url) {
     var avatar = const CircleAvatar(child: Icon(Icons.person));
-    if(url != null){
+    if (url != null) {
       var uri = Uri.tryParse(url);
-      if(uri != null && uri.isAbsolute){
+      if (uri != null && uri.isAbsolute) {
         avatar = CircleAvatar(backgroundImage: NetworkImage(url));
       }
     }
     return avatar;
   }
 
-  Widget iconEditButton(VoidCallback onPressed){
-    return IconButton(icon: const Icon(Icons.edit), color: Colors.orange, onPressed: onPressed);
-  }
-
-  Widget iconRemoveButton(BuildContext context, VoidCallback remove){
+  Widget iconEditButton(VoidCallback onPressed) {
     return IconButton(
-      icon: const Icon(Icons.delete), 
-      color: Colors.red, 
-      onPressed: () {
-        showDialog(
-          context: context, 
-          builder:  (context) => AlertDialog(
-            title: const Text('Excluir'),
-            content: const Text('Confirma a Exclusão?'),
-            actions: [
-              TextButton(
-                child: const Text('Não'), 
-                onPressed: (){
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                onPressed: remove,
-                child: const Text('Sim'),
-              ),
-            ],
-          )
-        );
-      }
-    );
+        icon: const Icon(Icons.edit),
+        color: Colors.orange,
+        onPressed: onPressed);
   }
 
-   @override
+  Widget iconRemoveButton(BuildContext context, VoidCallback remove) {
+    return IconButton(
+        icon: const Icon(Icons.delete),
+        color: Colors.red,
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: const Text('Excluir'),
+                    content: const Text('Confirma a Exclusão?'),
+                    actions: [
+                      TextButton(
+                        child: const Text('Não'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        onPressed: remove,
+                        child: const Text('Sim'),
+                      ),
+                    ],
+                  ));
+        });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var apCliente = ACliente();
     var lista = apCliente.consultar();
+    print('Lista ao consultar: ${lista}');
     return Scaffold(
         appBar: AppBar(
           title: const Text('Lista de Clientes'),
@@ -67,8 +68,8 @@ class ClienteLista extends StatelessWidget {
         ),
         body: FutureBuilder(
             future: lista,
-            builder: (BuildContext context,
-                AsyncSnapshot<List<DTOCliente>> futuro) {
+            builder:
+                (BuildContext context, AsyncSnapshot<List<DTOCliente>> futuro) {
               if (!futuro.hasData || futuro.data == null) {
                 return const CircularProgressIndicator();
               } else {
@@ -89,7 +90,7 @@ class ClienteLista extends StatelessWidget {
                         child: Row(
                           children: [
                             iconEditButton(() {
-                               _back.goToForm(context, cliente);
+                              _back.goToForm(context, cliente);
                             }),
                             iconRemoveButton(context, () {
                               // _back.remove(cliente.id, context);

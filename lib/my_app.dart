@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pudins_da_nega/widget/catalogo/catalogo_details.dart';
 import 'package:pudins_da_nega/widget/catalogo/catalogo_form.dart';
 import 'package:pudins_da_nega/widget/catalogo/catalogo_lista.dart';
 import 'package:pudins_da_nega/widget/cliente/cliente_details.dart';
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
   static const CLIENT_FORM = 'client-form';
   static const CLIENT_DETAILS = 'client-details';
   static const CATALOGO_LIST = 'catalogo-list';
-    static const CATALOGO_FORM = 'catalogo-Form';
+  static const CATALOGO_FORM = 'catalogo-form';
+  static const CATALOGO_DETAILS = 'catalogo-details';
 
   // This widget is the root of your application.
   @override
@@ -33,7 +35,8 @@ class MyApp extends StatelessWidget {
         CLIENT_FORM: (context) => ClienteForm(),
         CLIENT_DETAILS: (context) => ClienteDetails(),
         CATALOGO_LIST: (context) => CatalogoLista(),
-        CATALOGO_FORM: (context) => CatalogoForm()
+        CATALOGO_FORM: (context) => CatalogoForm(),
+        CATALOGO_DETAILS: (context) => CatalogoDetails()
       },
     );
   }

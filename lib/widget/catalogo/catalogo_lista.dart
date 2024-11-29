@@ -119,6 +119,13 @@ class _CatalogoListaState extends State<CatalogoLista> {
           ),
         ],
       ),
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          MyApp.CATALOGO_DETAILS,
+          arguments: produto,
+        );
+      },
     );
   }
 

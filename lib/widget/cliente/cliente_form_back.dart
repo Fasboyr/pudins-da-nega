@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pudins_da_nega/banco/sqlite/dao/dao_cliente.dart';
 import 'package:pudins_da_nega/dominio/cadastro/endereco.dart';
@@ -30,12 +32,14 @@ class ClienteFormBack {
   // Construtor para inicializar a entidade DTOCliente
   ClienteFormBack(BuildContext context) {
     var parameter = ModalRoute.of(context)!.settings.arguments;
+
     cliente = (parameter == null)
         ? DTOCliente(
             nome: '',
             cpf: '',
             cep: '',
             endereco: Endereco(
+                id: '',
                 rua: '',
                 numero: 0,
                 bairro: '',
@@ -48,6 +52,7 @@ class ClienteFormBack {
           )
         : parameter as DTOCliente;
 
+    
     _dao = DAOCliente();
     clienteService = Cliente(dao: _dao); // Inicializando o serviço de Cliente
   }
@@ -55,7 +60,12 @@ class ClienteFormBack {
   // Função para salvar o cliente
   save() async {
     print("Entrou no save do back");
-    await clienteService.salvar(cliente); // Salvando cliente no DAO
+    if (cliente.id != null || cliente.id == '') {
+      // print('Cliente no salvar do back ${cliente}');
+      await clienteService.alterar(cliente);
+    } else {
+      await clienteService.salvar(cliente);
+    } // Salvando cliente no DAO
   }
 
   // Validação de nome
@@ -127,9 +137,8 @@ class ClienteFormBack {
     print('Endereço: ${endereco}');
     try {
       clienteService.endereco = Endereco(
-        rua:
-            endereco?.rua ?? '',
-        numero: endereco?.numero ?? 0, 
+        rua: endereco?.rua ?? '',
+        numero: endereco?.numero ?? 0,
         complemento: endereco?.complemento ?? '',
         bairro: endereco?.bairro ?? '',
         cidade: endereco?.cidade ?? '',

@@ -1,5 +1,5 @@
 class Endereco {
-  late dynamic id;
+  late dynamic? id;
   late String? rua;
   late int? numero;
   late String? complemento;
@@ -15,8 +15,13 @@ class Endereco {
     required this.bairro,
     required this.cidade,
     required this.estado,
-  }){
+  }) {
     enderecoValidacao();
+  }
+
+  @override
+  String toString() {
+    return 'Endereco{id: $id, rua: $rua, numero: $numero, complemento: $complemento, bairro: $bairro, cidade: $cidade, estado: $estado}';
   }
 
   enderecoValidacao() {
@@ -40,7 +45,7 @@ class Endereco {
   }
 
   ehNumeroValido() {
-    if ( numero == null) {
+    if (numero == null) {
       throw Exception('O numero não pode ser vazio');
     } else if (numero! < 0) {
       throw Exception('O numero do endereço não pode ser negativo');

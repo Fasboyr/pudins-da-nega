@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:pudins_da_nega/aplicacao/a_cliente.dart';
 import 'package:pudins_da_nega/banco/sqlite/conexao.dart';
 import 'package:pudins_da_nega/dominio/cadastro/endereco.dart';
 import 'package:pudins_da_nega/dominio/dto/dto_cliente.dart';
@@ -11,7 +15,7 @@ class DAOCliente implements IDAOCliente {
   ''';
 
   final sqlInserirCliente = '''
-    INSERT INTO cliente (nome, cpf, cep, status,url_avatar, telefone, endereco_id) VALUES (?,?,?,?,?,?)
+    INSERT INTO cliente (nome, cpf, cep, status,url_avatar, telefone, endereco_id) VALUES (?,?,?,?,?,?,?)
   ''';
 
   final sqlAlterarEndereco = '''
@@ -20,7 +24,8 @@ class DAOCliente implements IDAOCliente {
   ''';
 
   final sqlAlterarCliente = '''
-    UPDATE cliente SET nome=?, cpf=?, cep=?, status =?, url_avatar=?, telefone=?, endereco_id=?
+    UPDATE cliente SET nome=?, cpf=?, 
+    cep=?, status =?, url_avatar=?, telefone=?, endereco_id=?
     WHERE id = ?
   ''';
 
@@ -48,6 +53,11 @@ class DAOCliente implements IDAOCliente {
     _db = await Conexao.abrir();
     print('Retornando ao consultar a partir do banco');
     var resultado = await _db.rawQuery(sqlConsultar);
+
+    print('Resultado do banco:');
+    for (var linha in resultado) {
+      print(linha); // Exibe todas as colunas e valores da linha
+    }
     List<DTOCliente> clientes = List.generate(resultado.length, (i) {
       var linha = resultado[i];
       return DTOCliente(
@@ -59,7 +69,7 @@ class DAOCliente implements IDAOCliente {
           urlAvatar: linha['url_avatar'].toString(),
           telefone: linha['telefone'].toString(),
           endereco: Endereco(
-            id: linha['e.id'],
+            id: linha['endereco_id'],
             rua: linha['rua'].toString(),
             numero: int.parse(linha['numero'].toString()),
             complemento: linha['complemento'].toString(),
@@ -84,7 +94,7 @@ class DAOCliente implements IDAOCliente {
         urlAvatar: resultado['url_avatar'].toString(),
         telefone: resultado['telefone'].toString(),
         endereco: Endereco(
-          id: resultado['e.idid'],
+          id: resultado['e.id'],
           rua: resultado['rua'].toString(),
           numero: int.parse(resultado['numero'].toString()),
           complemento: resultado['complemento'].toString(),
@@ -127,26 +137,82 @@ class DAOCliente implements IDAOCliente {
   Future<DTOCliente> alterar(DTOCliente dto) async {
     _db = await Conexao.abrir();
 
-    await _db.rawUpdate(sqlAlterarEndereco, [
+    print('>>>>>>>>>>>>>>>ALTERAR CLIENTES: ${dto}');
+    int.parse(dto.endereco.numero.toString());
+
+    print('Alterando endereço com os seguintes dados:');
+    print('Rua: ${dto.endereco.rua} (${dto.endereco.rua.runtimeType})');
+
+    try {
+      print(
+          'Número: ${dto.endereco.numero} (${dto.endereco.numero.runtimeType})');
+    } catch (e) {
+      print('Erro ao imprimir número: $e');
+    }
+    print(
+        'Complemento: ${dto.endereco.complemento} (${dto.endereco.complemento.runtimeType})');
+    print(
+        'Bairro: ${dto.endereco.bairro} (${dto.endereco.bairro.runtimeType})');
+    print(
+        'Cidade: ${dto.endereco.cidade} (${dto.endereco.cidade.runtimeType})');
+    print(
+        'Estado: ${dto.endereco.estado} (${dto.endereco.estado.runtimeType})');
+
+    try {
+      print(
+          'ID Endereço: ${dto.endereco.id.toString()} (${dto.endereco.id.runtimeType})');
+    } catch (e) {
+      print('Erro ao imprimir ID do endereço: $e');
+    }
+    print('Alterando cliente com os seguintes dados:');
+    print('Nome: ${dto.nome} (${dto.nome.runtimeType})');
+    print('CPF: ${dto.cpf} (${dto.cpf.runtimeType})');
+    print('CEP: ${dto.cep} (${dto.cep.runtimeType})');
+    print('Status: ${dto.status} (${dto.status.runtimeType})');
+    print('URL Avatar: ${dto.urlAvatar} (${dto.urlAvatar.runtimeType})');
+    print('Telefone: ${dto.telefone} (${dto.telefone.runtimeType})');
+    print(
+        'ID Endereço Cliente: ${dto.endereco.id.toString()} (${dto.endereco.id.runtimeType})');
+    print('ID Cliente: ${dto.id.toString()} (${dto.id.runtimeType})');
+
+    print('>>>>>>>>>>>>>ENDEREÇO RUA ${dto.endereco.rua}');
+    final rowsUpdatedEndereco = await _db.rawUpdate(sqlAlterarEndereco, [
       dto.endereco.rua,
       dto.endereco.numero,
       dto.endereco.complemento,
       dto.endereco.bairro,
       dto.endereco.cidade,
       dto.endereco.estado,
-      dto.endereco.id
+      int.parse(dto.endereco.id.toString())
     ]);
 
-    await _db.rawUpdate(sqlAlterarCliente, [
+    if (rowsUpdatedEndereco == 0) {
+      throw Exception('Nenhuma linha foi alterada para o endereço.');
+    } else {
+      print('Colunas alteradas do endereco: ${rowsUpdatedEndereco}');
+    }
+
+    print('Id do endereço: ${dto.endereco.id}');
+
+    final rowsUpdatedCliente = await _db.rawUpdate(sqlAlterarCliente, [
       dto.nome,
       dto.cpf,
       dto.cep,
       dto.status,
       dto.urlAvatar,
       dto.telefone,
-      dto.endereco.id,
-      dto.id
+      int.parse(dto.endereco.id.toString()),
+      int.parse(dto.id.toString())
     ]);
+
+    if (rowsUpdatedCliente == 0) {
+      throw Exception('Nenhuma linha foi alterada para o endereço.');
+    } else {
+      print('Colunas alteradas do cliente: ${rowsUpdatedCliente}');
+    }
+
+    var apCliente = ACliente();
+    var lista = apCliente.consultar();
     return dto;
   }
 

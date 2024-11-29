@@ -22,7 +22,7 @@ class ACliente {
   }
 
   Future<bool> excluir(dynamic id) async {
-    await cliente.alterar(id);
+    await cliente.excluir(id);
     return true;
   }
 

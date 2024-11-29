@@ -22,6 +22,7 @@ class Cliente {
     cpf = dto.cpf;
     cep = dto.cep;
     endereco = Endereco(
+      id: dto.endereco.id,
       rua: dto.endereco.rua,
       numero: dto.endereco.numero,
       complemento: dto.endereco.complemento,
@@ -134,9 +135,8 @@ class Cliente {
     return await dao.salvar(dto);
   }
 
-  Future<DTOCliente> alterar(dynamic id) async {
-    this.id = id;
-    return await dao.alterar(_id);
+  Future<DTOCliente> alterar(DTOCliente dto) async {
+    return await dao.alterar(dto);
   }
 
   Future<bool> excluir(dynamic id) async {

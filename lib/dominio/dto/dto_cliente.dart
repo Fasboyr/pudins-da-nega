@@ -10,14 +10,19 @@ class DTOCliente {
   late Endereco endereco;
   late String telefone;
 
-  DTOCliente(
-      {this.id,
-      required this.nome,
-      required this.cpf,
-      required this.cep,
-      this.status = 'A',
-      this.urlAvatar,
-      required this.endereco,
-      required this.telefone,
-      });
+  DTOCliente({
+    this.id,
+    required this.nome,
+    required this.cpf,
+    required this.cep,
+    this.status = 'A',
+    this.urlAvatar,
+    required this.endereco,
+    required this.telefone,
+  });
+
+  @override
+  String toString() {
+    return 'DTOCliente{id: $id, nome: $nome, cpf: $cpf, cep: $cep, status: $status, urlAvatar: $urlAvatar, telefone: $telefone, endereco: $endereco}';
+  }
 }
