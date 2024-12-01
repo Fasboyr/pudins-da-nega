@@ -12,7 +12,7 @@ void main() {
   setUpAll(() async {
     databaseFactory = databaseFactoryFfi;
     sqfliteFfiInit();
-    db = await Conexao.abrir();
+    db = (await Conexao.abrir())!;
   });
 
    test('teste scrit create table', () async {

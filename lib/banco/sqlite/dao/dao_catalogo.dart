@@ -78,7 +78,7 @@ class DAOCatalogo implements IDAOCatalogo {
 
   @override
   Future<List<DTOCatalogo>> consultar() async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
 
     // Consulta com join para trazer todos os dados necessários
     var resultados = await _db.rawQuery(sqlConsultar);
@@ -136,7 +136,7 @@ class DAOCatalogo implements IDAOCatalogo {
 
   @override
   Future<DTOCatalogo> consultarPorId(int id) async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
 
     // Consulta única que retorna os dados do catálogo, ingredientes e tamanhos em um join
     var resultados = await _db.rawQuery(sqlConsultarPorId, [id]);
@@ -188,7 +188,7 @@ class DAOCatalogo implements IDAOCatalogo {
 
   @override
   Future<DTOCatalogo> salvar(DTOCatalogo catalogo) async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
 
     // Inserir catálogo
     int catalogoId = await _db.rawInsert(sqlInserirCatalogo, [
@@ -226,7 +226,7 @@ class DAOCatalogo implements IDAOCatalogo {
   @override
   Future<DTOCatalogo> alterar(DTOCatalogo catalogo) async {
     print('Entrou no alterar do Dao do catalogo');
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
 
     // Atualizar catálogo
     await _db.rawUpdate(sqlAlterarCatalogo, [
@@ -292,7 +292,7 @@ class DAOCatalogo implements IDAOCatalogo {
 
   @override
   Future<bool> alterarStatus(int id) async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
     await _db.rawUpdate(sqlAlterarStatus, [id]);
     return true;
   }

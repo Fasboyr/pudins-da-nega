@@ -50,7 +50,7 @@ class DAOCliente implements IDAOCliente {
   @override
   Future<List<DTOCliente>> consultar() async {
     print('A função consultar() do DAO foi acessada.');
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
     print('Retornando ao consultar a partir do banco');
     var resultado = await _db.rawQuery(sqlConsultar);
 
@@ -83,7 +83,7 @@ class DAOCliente implements IDAOCliente {
 
   @override
   Future<DTOCliente> consultarPorId(int id) async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
     var resultado = (await _db.rawQuery(sqlConsultarPorId, [id])).first;
     DTOCliente cliente = DTOCliente(
         id: resultado['id'],
@@ -107,7 +107,7 @@ class DAOCliente implements IDAOCliente {
 
   @override
   Future<DTOCliente> salvar(DTOCliente dto) async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
 
     int enderecoId = await _db.rawInsert(sqlInserirEndereco, [
       dto.endereco.rua,
@@ -135,50 +135,12 @@ class DAOCliente implements IDAOCliente {
 
   @override
   Future<DTOCliente> alterar(DTOCliente dto) async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
 
-    print('>>>>>>>>>>>>>>>ALTERAR CLIENTES: ${dto}');
-    int.parse(dto.endereco.numero.toString());
-
-    print('Alterando endereço com os seguintes dados:');
-    print('Rua: ${dto.endereco.rua} (${dto.endereco.rua.runtimeType})');
-
-    try {
-      print(
-          'Número: ${dto.endereco.numero} (${dto.endereco.numero.runtimeType})');
-    } catch (e) {
-      print('Erro ao imprimir número: $e');
-    }
-    print(
-        'Complemento: ${dto.endereco.complemento} (${dto.endereco.complemento.runtimeType})');
-    print(
-        'Bairro: ${dto.endereco.bairro} (${dto.endereco.bairro.runtimeType})');
-    print(
-        'Cidade: ${dto.endereco.cidade} (${dto.endereco.cidade.runtimeType})');
-    print(
-        'Estado: ${dto.endereco.estado} (${dto.endereco.estado.runtimeType})');
-
-    try {
-      print(
-          'ID Endereço: ${dto.endereco.id.toString()} (${dto.endereco.id.runtimeType})');
-    } catch (e) {
-      print('Erro ao imprimir ID do endereço: $e');
-    }
-    print('Alterando cliente com os seguintes dados:');
-    print('Nome: ${dto.nome} (${dto.nome.runtimeType})');
-    print('CPF: ${dto.cpf} (${dto.cpf.runtimeType})');
-    print('CEP: ${dto.cep} (${dto.cep.runtimeType})');
-    print('Status: ${dto.status} (${dto.status.runtimeType})');
-    print('URL Avatar: ${dto.urlAvatar} (${dto.urlAvatar.runtimeType})');
-    print('Telefone: ${dto.telefone} (${dto.telefone.runtimeType})');
-    print(
-        'ID Endereço Cliente: ${dto.endereco.id.toString()} (${dto.endereco.id.runtimeType})');
-    print('ID Cliente: ${dto.id.toString()} (${dto.id.runtimeType})');
-
-    print('>>>>>>>>>>>>>ENDEREÇO RUA ${dto.endereco.rua}');
-    final rowsUpdatedEndereco = await _db.rawUpdate(sqlAlterarEndereco, [
+   
+    await _db.rawUpdate(sqlAlterarEndereco, [
       dto.endereco.rua,
-      dto.endereco.numero,
+      int.parse(dto.endereco.numero.toString()),
       dto.endereco.complemento,
       dto.endereco.bairro,
       dto.endereco.cidade,
@@ -186,15 +148,8 @@ class DAOCliente implements IDAOCliente {
       int.parse(dto.endereco.id.toString())
     ]);
 
-    if (rowsUpdatedEndereco == 0) {
-      throw Exception('Nenhuma linha foi alterada para o endereço.');
-    } else {
-      print('Colunas alteradas do endereco: ${rowsUpdatedEndereco}');
-    }
 
-    print('Id do endereço: ${dto.endereco.id}');
-
-    final rowsUpdatedCliente = await _db.rawUpdate(sqlAlterarCliente, [
+    await _db.rawUpdate(sqlAlterarCliente, [
       dto.nome,
       dto.cpf,
       dto.cep,
@@ -205,20 +160,12 @@ class DAOCliente implements IDAOCliente {
       int.parse(dto.id.toString())
     ]);
 
-    if (rowsUpdatedCliente == 0) {
-      throw Exception('Nenhuma linha foi alterada para o endereço.');
-    } else {
-      print('Colunas alteradas do cliente: ${rowsUpdatedCliente}');
-    }
-
-    var apCliente = ACliente();
-    var lista = apCliente.consultar();
     return dto;
   }
 
   @override
   Future<bool> alterarStatus(int id) async {
-    _db = await Conexao.abrir();
+    _db = (await Conexao.abrir())!;
     await _db.rawUpdate(sqlAlterarStatus, [id]);
     return true;
   }

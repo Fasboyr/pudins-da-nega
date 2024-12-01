@@ -5,15 +5,18 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class Conexao {
-  static late Database _db;
+  static Database? _db;
 
-   static Future<Database> abrir() async {
+   static Future<Database?> abrir() async {
+    if (_db != null) {
+      return _db;
+    }
      print('Abrindo banco de dados');
       if (kIsWeb) {
         databaseFactory = databaseFactoryFfiWeb;
       }
     var path = join(await getDatabasesPath(), 'banco.db');
-     deleteDatabase(path);
+     //deleteDatabase(path);
      print('Banco aberto');
     _db = await openDatabase(
       path,
@@ -25,7 +28,7 @@ class Conexao {
       },
       singleInstance: true
     );
-   print('Terminando a iniciação do banco');
-    return _db;
+   print('Terminando a iniciação do banco');  
+       return _db;
   }
 }

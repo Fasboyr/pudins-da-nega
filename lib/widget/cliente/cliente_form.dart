@@ -151,7 +151,7 @@ class ClienteForm extends StatelessWidget {
                 _form.currentState!.save();
                 if (_back.isValid) {
                   _back.save();
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
                 }
               }
             },
